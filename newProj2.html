@@ -1,0 +1,224 @@
+<!DOCTYPE html> 
+<html>
+<head> <title> Yahtzee </title>
+<!--	Name: Cristian Macias
+Course:	235.01
+HomeWork:	#2
+Git-Hub:	https://github.com/yourName/yourHomeWork
+-->		
+<style type="text/css">
+<!--
+h1{text-align: center;}
+h2{text-align: center; font-size: 14px; margin-right:auto; margin-left: auto; color:blue}
+div.a{text-align: center;}
+table.t{margin-left: auto; margin-right: auto;}
+td.b{border:2px #efefef inset; background-color:#AEAFFF; width: 2em;}
+td.c{text-align: right; width: 100px;}
+button.b{color: #F5E6E3; background-color: #5F00CA; margin-right: 20px;}
+
+-->
+</style>
+</head>
+
+<body>
+
+<script language="JavaScript">
+<!--
+
+ var v= new Array(0,0,0,0,0);
+ var h= new Array(false, false, false, false, false); // false means not clicked
+ var saved= new Array(false, false, false, false, false, false, false, false,false); //false means not saved
+ var f=new Array(0,0,0,0,0,0,0) // f[1] means how many 1s we have, f[2] means how many 2s etc
+ var total=0;
+ var maxroll=3; //max amount of rolls until you have to pick a number
+ var currentRoll=0;
+ var savedValues=[0, 0, 0, 0, 0, 0, 0, 0, 0,0,0];
+ var threes=0;
+ var fours=0;
+ var yahtzees=0;
+ 
+ //restarts the game
+ function restart(){
+    threes=0;
+    fours=0;
+    yahtzees=0;
+    total=0;
+    currentRoll=0;
+    saved=[false, false, false, false, false, false, false, false,false];
+    savedValues=[0, 0, 0, 0, 0, 0, 0, 0, 0,0,0];
+    if(h[i]){
+        d.src="pix/dice0.gif";
+            }
+    f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
+for(var i=0; i<5;i++)
+{       
+        d=document.getElementById("d"+i);
+        v[i]=0;
+        d.src="pix/dice0.gif";
+        f[v[i]]++;
+}
+}
+//rolls the numbers
+ function roll()
+{
+    if(currentRoll!=maxroll){
+
+f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
+for(var i=0; i<5;i++)
+{  
+    if(saved[i]==false){
+    if(!h[i]||v[i]==0){
+        d=document.getElementById("d"+i);
+        v[i]= Math.floor(6*Math.random())+1;
+        d.src="pix/dice"+v[i]+".gif";
+            }
+
+    f[v[i]]++;
+}
+}
+currentRoll++;
+}
+
+}
+//lets you hold a die
+function hold(i)
+{
+    d=document.getElementById("d"+i);
+    h[i]=!h[i];
+    if(h[i]){
+        d.src="pix/diceX"+v[i]+".gif";
+            }
+    else {
+        d.src="pix/dice"+v[i]+".gif";
+         }
+}
+
+//lets you see the current values
+function scr(i) {
+    d=document.getElementById("s"+i);
+    
+    if(0<i&&i<=6){
+        if(f[i]==3){
+            threes=f[i]*i;
+        }
+        if(f[i]==4){
+            fours=f[i]*i;
+        }
+        if(f[i]==5){
+            yahtzees=f[i]*i;
+        }
+        if(saved[i]!=true){
+        d.innerHTML=f[i]*i;}
+        else{
+            d.innerHTML='<span style="color:red;">'+savedValues[i]+'</span>';
+        }
+    }
+
+    if(i==7){  
+        if(saved[i]!=true){
+        d.innerHTML=threes;}
+        else{
+            d.innerHTML='<span style="color:red;">'+threes+'</span>';
+        }
+        }
+    
+    if(i==8){
+        if(saved[i]!=true){
+        d.innerHTML=fours;}
+        else{
+            d.innerHTML='<span style="color:red;">'+fours+'</span>';
+        }
+    }
+    if(i==9){
+        if(saved[i]!=true){
+        d.innerHTML=yahtzees;}
+        else{
+            d.innerHTML='<span style="color:red;">'+yahtzees+'</span>';
+        }
+    }
+
+    if(i==10){
+        d.innerHTML=total;
+    }
+
+}
+//saves a value when clicked
+function save(i){
+    
+    if(currentRoll==maxroll){
+    d=document.getElementById("s"+i);
+    if(i!=7&&i!=8 && i!=9 && i!=10){
+    if(saved[i]==false){
+        currentRoll=0;
+        savedValues[i]=f[i]*i;
+        total+=savedValues[i];
+        saved[i]=true;
+    }
+}
+    else{
+        if(i==7 && saved[i]==false){
+        currentRoll=0;
+        savedValues[i]=threes;
+        total+=threes;
+        saved[i]=true;
+        }
+        if(i==8 && saved[i]==false){
+        currentRoll=0;
+        savedValues[i]=fours;
+        total+=fours;
+        saved[i]=true;
+        }
+        if(i==9 && saved[i]==false){
+        currentRoll=0;
+        savedValues[i]=yahtzees;
+        total+=yahtzees;
+        saved[i]=true;
+        }
+    }
+}
+}
+
+
+//-->
+</script>
+
+
+
+<h1> Yahtzee </h1>
+<h2>Rules: To see the current numbers please hover over each number you want to see
+<h2>every time you want an update. Please roll max of 3 times then unblock your dice.</h2>
+<h2>Then you may select a number you would like to lock in!</h2>
+<br>
+<div class="a"> 
+    <img ID="d0" onclick="hold(0)" src="pix/dice0.gif">
+    <img ID="d1" onclick="hold(1)" src="pix/dice0.gif">
+    <img ID="d2" onclick="hold(2)" src="pix/dice0.gif">
+    <img ID="d3" onclick="hold(3)" src="pix/dice0.gif">
+    <img ID="d4" onclick="hold(4)" src="pix/dice0.gif">
+</div>
+
+<br><br><br>
+<table class="t">
+
+<tr><td class="a"> 1's</td> <td id="s1" onmouseover="scr(1);" onclick="save(1);"  class="b"> </td>
+    
+    <td  class="c" rowspan="5"> <button class="b" onclick="roll()"> Roll </button></td></tr>
+
+<tr><td class="a"> 2's </td> <td id="s2" onmouseover="scr(2);" onclick="save(2)"  class="b"></td></tr>
+<tr><td class="a"> 3's </td> <td id="s3" onmouseover="scr(3);" onclick="save(3)"  class="b"></td></tr>
+<tr><td class="a"> 4's </td> <td id="s4" onmouseover="scr(4);" onclick="save(4)"  class="b"></td></tr>
+<tr><td class="a"> 5's </td> <td id="s5" onmouseover="scr(5);" onclick="save(5)"  class="b"></td></tr>
+<tr><td class="a"> 6's </td> <td id="s6" onmouseover="scr(6);" onclick="save(6)"  class="b"></td>
+    
+    <td class "c" rowspan="5"> <button class "c" onclick="restart()"> New game</button></td> </tr>
+
+<tr><td class="a"> 3 of a kind </td> <td id="s7" onmouseover="scr(7);" onclick="save(7);"  class="b"></td></tr>
+<tr><td class="a"> 4 of a kind </td> <td id="s8" onmouseover="scr(8);" onclick="save(8);"  class="b"></td></tr>
+<tr><td class="a"> Yahtzee </td> <td id="s9" onmouseover="scr(9);" onclick="save(9);"  class="b"></td></tr>
+<tr><td class="a"> Total </td> <td id="s10" onmouseover="scr(10);" class="b"></td></tr>
+</table>
+
+
+
+</body>
+</html>
